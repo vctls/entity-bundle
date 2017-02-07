@@ -9,6 +9,7 @@
             "email": "toulousevictor@gmail.com"
         }
     ],
+    "homepage": "https://github.com/vctls/entity-bundle",
     "autoload": {
         "psr-4": { "Vctls\\EntityBundle\\": "" }
     },

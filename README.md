@@ -1,7 +1,8 @@
 # VctlsEntityBundle
 
-Generic entity management bundle.
-The goal of this bundle is to enable basic CRUD actions on database entities using a single controller and series of views for any entity. 
+Generic entity management bundle.  
+The goal of this bundle is to enable basic CRUD actions on database entities using a single controller and series of views for any entity.  
+**Disclaimer :** this bundle is far from complete, untested, and not supposed to be used in a production environment, ever!
 
 ## Prerequisites
   - Bootstrap 3
