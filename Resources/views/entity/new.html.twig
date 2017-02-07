@@ -1,0 +1,25 @@
+{% extends 'logged.html.twig' %}
+{% block javascripts %}
+    <script src="{{ asset("assets/vendor/jquery-ui/jquery-ui.min.js") }}"></script>
+{% endblock %}
+
+{% block body %}
+    <div class="panel panel-default">
+        <div class="panel-heading">
+            <h1>{{ entityName }} creation</h1>
+        </div>
+
+        <div class="panel-body">
+            {{ form_start(form, { 'style': 'horizontal' }) }}
+            {{ form_widget(form) }}
+            <input type="submit" value="Create" class="btn btn-success"/>
+            {{ form_end(form) }}
+        </div>
+    </div>
+
+    <div>
+        <a href="{{ path('entity_index', { entityName: entityName}) }}" class="btn btn-default">
+            Back to the list
+        </a>
+    </div>
+{% endblock %}

@@ -1,0 +1,16 @@
+{
+    "name": "vctls/entity-bundle",
+    "description": "Generic entity management bundle",
+    "type": "symfony-bundle",
+    "require": {
+        "symfony/symfony": "^2.8"
+    },
+    "license": "MIT",
+    "authors": [
+        {
+            "name": "Victor Toulouse",
+            "email": "toulousevictor@gmail.com"
+        }
+    ],
+    "minimum-stability": "dev"
+}

@@ -1,0 +1,29 @@
+{
+    "draw": "{{ draw }}",
+    "recordsTotal": "{{ recordsTotal }}",
+    "recordsFiltered": "{{ recordsFiltered }}",
+    "data": [
+        {% for row in data %}
+        {
+            {% for field, value in row %}
+                "{{ field }}":
+                {% if field == id %}
+                    "<a href=\"{{ path("entity_show", {"entityName": entityName, "id": value }) }}\">{{ value
+                    }}</a>"
+                {% elseif value is iterable %}
+                    {
+                        "_": "{{ value.id }}",
+                        "display": "<a href=\"{{ path("entity_show", {"entityName": value.entityName, "id": value.id})
+                        }}\" target=\"_blank\" >{{
+                        value.display }}</a>"
+                    }
+                {% else %}
+                    "{{ value }}"
+                {% endif %}
+                {% if not loop.last %},{% endif %}
+            {% endfor %}
+        }
+            {% if not loop.last %},{% endif %}
+        {% endfor %}
+    ]
+}

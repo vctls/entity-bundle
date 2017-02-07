@@ -1,0 +1,52 @@
+{% extends 'logged.html.twig' %}
+
+{% block body %}
+    <div class="panel panel-default">
+        <div class="panel-heading">
+            <h1>{{ entityName }}</h1>
+        </div>
+
+        <table class="table table-condensed">
+            <tbody>
+            {# Parcourir les colonnes #}
+            {% for field  in fields %}
+                <tr>
+                    <th>{{ field }}</th>
+                    {% set attribute = attribute(instance, field) %}
+                    <td>
+                        {% if attribute is not iterable  %}
+                            {% if field == 'id' %}
+                                <a href="{{ path('entity_show', { 'entityName': entityName, 'id': instance.id }) }}">
+                                    {{ instance.id }}
+                                </a>
+                            {% else %}
+                                {% if attribute.timestamp is defined %}
+                                    {{ attribute|date('Y-m-d') }}
+                                {% else %}
+                                    {{ attribute }}
+                                {% endif %}
+                            {% endif %}
+                        {% else %}
+                            {% for item in attribute %}
+                                {{ item }}
+                            {% endfor %}
+                        {% endif %}
+                    </td>
+                </tr>
+            {% endfor %}
+            </tbody>
+        </table>
+    </div>
+
+    <div>
+        <a href="{{ path('entity_edit', { 'entityName': entityName, 'id': instance.id }) }}"
+           class="btn btn-primary">Edit</a>
+        <div style="display: inline-block">
+            {{ form_start(delete_form) }}
+            <input type="submit" class="btn btn-danger" value="Delete">
+            {{ form_end(delete_form) }}
+        </div>
+        <a href="{{ path('entity_index', { 'entityName': entityName }) }}"
+           class="btn btn-default">Back to the list</a>
+    </div>
+{% endblock %}

@@ -1,0 +1,3 @@
+vctls_entity:
+    resource: "@VctlsEntityBundle/Controller/"
+    type:     annotation

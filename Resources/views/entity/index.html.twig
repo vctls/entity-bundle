@@ -1,0 +1,92 @@
+{% extends 'logged.html.twig' %}
+{% block stylesheets %}
+    <link rel="stylesheet" href="{{ asset('assets/vendor/datatables.net-bs/css/dataTables.bootstrap.min.css') }}">
+    <link rel="stylesheet" href="{{ asset('assets/vendor/datatables.net-responsive-bs/css/responsive.bootstrap.css') }}">
+    <style>
+        .table > tbody > tr > td {
+            vertical-align: middle;
+        }
+    </style>
+{% endblock %}
+{% block javascripts %}
+    <script type="text/javascript" src="{{ asset('assets/vendor/datatables.net/js/jquery.dataTables.js') }}"></script>
+    <script type="text/javascript" src="{{ asset('assets/vendor/datatables.net-bs/js/dataTables.bootstrap.js') }}"></script>
+    <script type="text/javascript" src="{{ asset('assets/vendor/datatables.net-responsive/js/dataTables.responsive.min.js') }}"></script>
+    <script type="text/javascript" src="{{ asset('assets/vendor/datatables.net-responsive-bs/js/responsive.bootstrap.js') }}"></script>
+    <script>
+        $(function () {
+            $('#entity').dataTable({
+                responsive: true,
+                paging:     true,
+                processing: true,
+                serverSide: true,
+                id: "{{ id }}",
+                ajax: {
+                    url: "{{ path('datatable', { 'entityName': entityName}) }}"
+                    , type: "GET"
+                    // Si le cache est désactivé, jQuery ajoute automatiquement un timestamp à la requête.
+                    , cache: true
+                }
+                , columns: [
+                    {% for column in columns %}
+                    {
+                        data: "{{ column.name }}",
+                        {# Activer la recherche sur les colonnes désirées. #}
+                        searchable: {{ column.searchable ? 'true' : 'false' }},
+                        {% if column.is_entity %}
+                        render: {
+                            _: "_",
+                            filter: "filter",
+                            display: "display"
+                        }
+                        {% endif %}
+                    }
+                    {% if loop.index != loop.length %},{% endif %}
+                    {% endfor %}
+                ]
+                , language: {
+                    processing:     "Traitement en cours...",
+                    search:         "Rechercher :",
+                    lengthMenu:     "Afficher _MENU_ éléments",
+                    info:           "Affichage de l'élément _START_ à _END_ sur _TOTAL_ éléments",
+                    infoEmpty:      "Affichage de l'élément 0 à 0 sur 0 éléments",
+                    infoFiltered:   "(filtré de _MAX_ éléments au total)",
+                    infoPostFix:    "",
+                    loadingRecords: "Chargement en cours...",
+                    zeroRecords:    "Aucun élément à afficher",
+                    emptyTable:     "Aucune donnée disponible dans le tableau",
+                    paginate: {
+                        first:      "Premier",
+                        previous:   "Précédent",
+                        next:       "Suivant",
+                        last:       "Dernier"
+                    },
+                    aria: {
+                        sortAscending:  ": activer pour trier la colonne par ordre croissant",
+                        sortDescending: ": activer pour trier la colonne par ordre décroissant"
+                    }
+                }
+            });
+        });
+    </script>
+{% endblock %}
+{% block body %}
+    <div class="panel panel-default">
+        <div class="panel-heading">
+            <h1>{{ entityName }}</h1>
+        </div>
+        <table id="entity" class="table" width="100%">
+            <thead>
+            <tr>
+                {% for column in columns %}
+                    <th>{{ column.name }}</th>
+                {% endfor %}
+            </tr>
+            </thead>
+        </table>
+    </div>
+
+    <a href="{{ path('entity_new', { 'entityName': entityName}) }}"
+       class="btn btn-success">Create a new entry</a>
+
+{% endblock %}
