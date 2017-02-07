@@ -2,9 +2,6 @@
     "name": "vctls/entity-bundle",
     "description": "Generic entity management bundle",
     "type": "symfony-bundle",
-    "require": {
-        "symfony/symfony": "^2.8"
-    },
     "license": "MIT",
     "authors": [
         {
@@ -12,5 +9,19 @@
             "email": "toulousevictor@gmail.com"
         }
     ],
-    "minimum-stability": "dev"
+    "autoload": {
+        "psr-4": { "Vctls\\EntityBundle\\": "" }
+    },
+    "require": {
+        "php" : ">=5.6",
+        "symfony/config" : "~2.3|~3.0",
+        "symfony/dependency-injection" : "~2.3|~3.0",
+        "symfony/http-kernel" : "~2.3|~3.0"
+    },
+    "minimum-stability": "dev",
+    "extra": {
+        "branch-alias": {
+            "dev-master": "1.0.x-dev"
+        }
+    }
 }
