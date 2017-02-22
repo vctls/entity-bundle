@@ -2,7 +2,7 @@
 
 namespace Vctls\EntityBundle\Controller;
 
-use AppBundle\Normalizer\EntityNormalizer;
+use Vctls\EntityBundle\Normalizer\EntityNormalizer;
 use Doctrine\ORM\EntityManager;
 use Doctrine\ORM\Mapping\ClassMetadata;
 use ReflectionClass;

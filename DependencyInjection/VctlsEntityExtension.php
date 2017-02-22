@@ -8,7 +8,8 @@ use Symfony\Component\HttpKernel\DependencyInjection\Extension;
 use Symfony\Component\DependencyInjection\Loader;
 
 /**
- *
+ * Class VctlsEntityExtension
+ * @package Vctls\EntityBundle\DependencyInjection
  */
 class VctlsEntityExtension extends Extension
 {

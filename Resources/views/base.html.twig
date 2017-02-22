@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>{% block title %}{{ application_name }}{% endblock %}</title>
+
+    <link rel="stylesheet" href="{{ asset('assets/vendor/bootstrap/dist/css/bootstrap.min.css') }}" media="screen">
+    <link rel="stylesheet" href="{{ asset('assets/vendor/bootstrap-drawer/dist/css/bootstrap-drawer.min.css') }}">
+    {% block stylesheets %}{% endblock %}
+
+    <link rel="icon" type="image/x-icon" href="{{ asset('favicon.ico') }}">
+</head>
+
+<body class="has-drawer">
+
+<div id="drawer" class="drawer dw-xs-10 dw-sm-6 dw-md-4 fold" aria-labelledby="drawerExample">
+    <div class="drawer-controls">
+        <a href="#drawer" data-toggle="drawer" aria-foldedopen="false" aria-controls="drawer" class="btn btn-danger">
+            <span class="glyphicon glyphicon-menu-hamburger"></span>
+        </a>
+    </div>
+    <div class="drawer-contents">
+        <div class="drawer-heading">
+            <h2 class="drawer-title">Menu</h2>
+        </div>
+        <div class="drawer-body">
+            {% spaceless %}
+            {% if is_granted('ROLE_ADMIN') %}
+                {{ knp_menu_render('entity') }}
+            {% endif %}
+            {% endspaceless %}
+        </div>
+        <div class="drawer-footer">
+        </div>
+    </div>
+</div>
+
+<div id="container" class="container">
+    {% block body %}{% endblock %}
+</div>
+
+<script type="text/javascript" src="{{ asset('assets/vendor/jquery/dist/jquery.min.js') }}"></script>
+<script type="text/javascript" src="{{ asset('assets/vendor/bootstrap/dist/js/bootstrap.min.js') }}"></script>
+<script type="text/javascript" src="{{ asset('assets/vendor/bootstrap-drawer/dist/js/drawer.min.js') }}"></script>
+{% block javascripts %}{% endblock %}
+
+</body>
+</html>
