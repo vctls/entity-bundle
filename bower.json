@@ -1,0 +1,29 @@
+{
+  "name": "vctls-entity",
+  "authors": [
+    "Victor Toulouse <toulousevictor@gmail.com>"
+  ],
+  "description": "Generic entity management bundle for Symfony",
+  "main": "",
+  "keywords": [
+    "symfony"
+  ],
+  "license": "MIT",
+  "homepage": "https://github.com/vctls/entity-bundle",
+  "private": true,
+  "ignore": [
+    "**/.*",
+    "node_modules",
+    "bower_components",
+    "web/assets/vendor/",
+    "test",
+    "tests"
+  ],
+  "dependencies": {
+    "bootstrap": "^3.3.7",
+    "datatables.net": "^2.1.1",
+    "datatables.net-bs": "^2.1.1",
+    "datatables.net-responsive": "^2.1.1",
+    "datatables.net-responsive-bs": "^2.1.1"
+  }
+}

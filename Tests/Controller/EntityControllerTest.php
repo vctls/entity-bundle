@@ -4,8 +4,11 @@ namespace Vctls\EntityBundle\Tests\Controller;
 
 use Symfony\Bundle\FrameworkBundle\Test\WebTestCase;
 
-class DefaultControllerTest extends WebTestCase
+class EntityControllerTest extends WebTestCase
 {
+    /**
+     * TODO Do some actual testing.
+     */
     public function testIndex()
     {
         $client = static::createClient();

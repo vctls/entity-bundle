@@ -52,6 +52,7 @@ class EntityController extends Controller
 
         /** @var ClassMetadata $metadata */
         $metadata = $em->getClassMetadata($backslashedEntityName);
+        $backslashedEntityName =$metadata->getName();
 
         // Récupérer un tableau des identifiants de l'entité.
         $id = $metadata->getIdentifier();
@@ -76,6 +77,11 @@ class EntityController extends Controller
             return $data;
         }, $columns);
 
+        if ( !method_exists($backslashedEntityName, 'getId') ) {
+            $this->get('session')->getFlashBag()->add('danger',
+                "Entity <strong>$entityName</strong> does not implement method <strong>getId()</strong> !"
+            );
+        }
 
         return [
             'entityName'    => $entityName,
@@ -133,17 +139,18 @@ class EntityController extends Controller
         $filter = $request->get('search')['value'];
 
         // Add filtering clauses.
-        foreach ($columns as $column) {
-            if ($column['searchable'] == 'true' ) {
-                $col = $column['data'];
-                $type = $metadata->getTypeOfField($col);
-                $before = $this->searchableTypes[$type][0];
-                $after = $this->searchableTypes[$type][1];
-                // TODO Use private array $searchableTypes.
-                $qb->orWhere( "e.$col $before$filter$after" );
+        if ($filter) {
+            foreach ($columns as $column) {
+                if ($column['searchable'] == 'true' ) {
+                    $col = $column['data'];
+                    $type = $metadata->getTypeOfField($col);
+                    $before = $this->searchableTypes[$type][0];
+                    $after = $this->searchableTypes[$type][1];
+                    // TODO Use private array $searchableTypes.
+                    $qb->orWhere( "e.$col $before$filter$after" );
+                }
             }
         }
-
         // Add ordering clauses.
         foreach ( $request->get('order') as $order ) {
             $col = $columns[$order['column']]['data'];
@@ -363,6 +370,6 @@ class EntityController extends Controller
                 ]))
             ->setMethod('DELETE')
             ->getForm()
-        ;
+            ;
     }
 }

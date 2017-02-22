@@ -45,7 +45,15 @@ class EntityNormalizer extends AbstractNormalizer
                 if (isset($this->callbacks[$attributeName])) {
                     $attributeValue = call_user_func($this->callbacks[$attributeName], $attributeValue);
                 }
-                if (null !== $attributeValue && !is_scalar($attributeValue)) {
+
+                if ( is_array($attributeValue) ) {
+                    $data = [];
+                    foreach ($attributeValue as $key => $value) {
+                        // If the key is not simply an index, print the pair.
+                        array_push($data, is_numeric($key) ? "$value" : "$key => $value");
+                    }
+                    $attributeValue = implode(", " , $data);
+                } elseif ( null !== $attributeValue && !is_scalar($attributeValue) ) {
 
                     // TODO You can do better than this.
 

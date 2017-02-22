@@ -1,3 +1,4 @@
+{% import '@VctlsEntity/macros/flash.html.twig' as flash %}
 <!DOCTYPE html>
 <html>
 
@@ -39,6 +40,9 @@
 </div>
 
 <div id="container" class="container">
+    <div id="alert">
+        {{ flash.flashbag() }}
+    </div>
     {% block body %}{% endblock %}
 </div>
 

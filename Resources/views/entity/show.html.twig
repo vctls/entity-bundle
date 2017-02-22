@@ -27,8 +27,8 @@
                                 {% endif %}
                             {% endif %}
                         {% else %}
-                            {% for item in attribute %}
-                                {{ item }}
+                            {% for key, item in attribute %}
+                                {{ key }} => {{ item }}
                             {% endfor %}
                         {% endif %}
                     </td>
