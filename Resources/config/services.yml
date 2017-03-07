@@ -1,4 +1,12 @@
 services:
-#    vctls_entity.example:
-#        class: Vctls\EntityBundle\Example
-#        arguments: ["@service_id", "plain_value", "%parameter%"]
+    # Menu d'accès au CRUD générique pour toutes les entités.
+    vctls_entity.menu_builder:
+        class: Vctls\EntityBundle\Menu\Builder
+        arguments: ["@knp_menu.factory"]
+
+    vctls_entity.entity_menu:
+        class: Knp\Menu\MenuItem
+        factory: ["@vctls_entity.menu_builder", entityMenu]
+        arguments: ["@doctrine"]
+        tags:
+            - { name: knp_menu.menu, alias: entity }

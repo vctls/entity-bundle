@@ -26,7 +26,7 @@ Add the repo to the `composer.json` :
 Add the bundle to `composer.json` :
 ```json
 {
-    "require": {
+    "require-dev": {
         "vctls/entity-bundle": "dev-master"
     }
 }
@@ -46,9 +46,10 @@ class AppKernel extends Kernel
 
     public function registerBundles()
     {
-        $bundles = array(
+        // ...
+        if (in_array($this->getEnvironment(), array('dev', 'test'), true)) {
             // ...
-            new Vctls\EntityBundle\VctlsEntityBundle(),
+            $bundles[] = new Vctls\EntityBundle\VctlsEntityBundle();
         );
 
         // ...
@@ -56,8 +57,10 @@ class AppKernel extends Kernel
 }
 ```
 
+**Also, enable KnpMenuBundle in dev or prod, in order for the menu builder service to work!**
+
 ### Configuration
-Complete `routing.yml` :
+Complete `routing_dev.yml` :
 ```yaml
 vctls_entity:
     resource: "@VctlsEntityBundle/Resources/config/routing.yml"
@@ -65,3 +68,7 @@ vctls_entity:
 ```
 
 ### Setup frontend dependencies
+
+### Usage
+Enter the index route manually, or use the integrated Menu builder to create a menu to access all your entities.
+By default, the index route is `/entity/index/{entityName}`. Use the entity alias, like `AppBundle:MyEntity`.
