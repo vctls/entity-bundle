@@ -2,6 +2,7 @@
 
 namespace Vctls\EntityBundle\Controller;
 
+use Vctls\EntityBundle\Form\DefaultType;
 use Vctls\EntityBundle\Normalizer\EntityNormalizer;
 use Doctrine\ORM\EntityManager;
 use Doctrine\ORM\Mapping\ClassMetadata;
@@ -104,6 +105,8 @@ class EntityController extends Controller
      * @param Request $request
      * @param String $entityName
      * @return JsonResponse|array
+     * @throws \Doctrine\ORM\NoResultException
+     * @throws \Doctrine\ORM\NonUniqueResultException
      */
     public function datatableAction(Request $request, $entityName)
     {
@@ -189,6 +192,7 @@ class EntityController extends Controller
      * @param Request $request
      * @param String $entityName
      * @return RedirectResponse|Response|array
+     * @throws \ReflectionException
      */
     public function newAction(Request $request, $entityName)
     {
@@ -205,7 +209,12 @@ class EntityController extends Controller
         $reflectionClass = new ReflectionClass($classFqdn);
         $instance = $reflectionClass->newInstance();
 
-        $form = $this->createForm("AppBundle\\Form\\{$entityNameWithPartialNamespace}Type", $instance);
+        // If a form type exists for that entity, use it.
+        // Else, use the default form type.
+        $formTypeClass = "AppBundle\\Form\\{$entityNameWithPartialNamespace}Type";
+        $formType = class_exists($formTypeClass) ? $formTypeClass : DefaultType::class;
+
+        $form = $this->createForm($formType, $instance);
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
@@ -296,8 +305,11 @@ class EntityController extends Controller
         // Remplacer les deux point de l'alias par un antislash pour récupérer le formulaire.
         $noColumnClassName = str_replace(':', '\\', $backslashedEntityName);
 
-        $deleteForm = $this->createDeleteForm( $entityName, $instance);
-        $editForm = $this->createForm("AppBundle\\Form\\{$noColumnClassName}Type", $instance);
+        $formTypeClass = "AppBundle\\Form\\{$noColumnClassName}Type";
+        $formType = class_exists($formTypeClass) ? $formTypeClass : DefaultType::class;
+
+        $deleteForm = $this->createDeleteForm($entityName, $instance);
+        $editForm = $this->createForm($formType, $instance);
         $editForm->handleRequest($request);
 
         if ($editForm->isSubmitted() && $editForm->isValid()) {
@@ -371,5 +383,20 @@ class EntityController extends Controller
             ->setMethod('DELETE')
             ->getForm()
             ;
+    }
+
+    /**
+     * Try to find a corresponding form type in the conventional Symfony Form directory.
+     * If there is none, use the default form type.
+     *
+     * @param string $entityNameWithPartialNamespace
+     * @return string
+     */
+    protected function findFormType($entityNameWithPartialNamespace)
+    {
+        // If a form type exists for that entity, use it.
+        // Else, use the default form type.
+        $formTypeClass = "AppBundle\\Form\\{$entityNameWithPartialNamespace}Type";
+        return class_exists($formTypeClass) ? $formTypeClass : DefaultType::class;
     }
 }

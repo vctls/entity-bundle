@@ -32,6 +32,7 @@ class Builder
      *
      * @param ManagerRegistry $doctrine
      * @return \Knp\Menu\ItemInterface
+     * @throws \Doctrine\ORM\ORMException
      */
     public function entityMenu(ManagerRegistry $doctrine)
     {
