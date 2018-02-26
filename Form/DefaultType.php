@@ -3,6 +3,8 @@
 namespace Vctls\EntityBundle\Form;
 
 use Symfony\Component\Form\AbstractType;
+use Symfony\Component\Form\Extension\Core\Type\CheckboxType;
+use Symfony\Component\Form\Extension\Core\Type\DateTimeType;
 use Symfony\Component\Form\FormBuilderInterface;
 
 /**
@@ -40,8 +42,13 @@ class DefaultType extends AbstractType
 
                     switch ($paramTypeName) {
                         case 'DateTime' :
-                            $field[1] = 'Symfony\Component\Form\Extension\Core\Type\DateTimeType';
+                            $field[1] = DateTimeType::class;
                             $field[2] = ['data' => new \DateTime(), 'date_widget' => 'single_text', 'time_widget' => 'single_text'];
+                            break;
+
+                        case 'boolean' :
+                            $field[1] = CheckboxType::class;
+                            $field[2] = ['required' => false];
                             break;
                     }
                 }

@@ -1,7 +1,8 @@
 {% extends '@VctlsEntity/base.html.twig' %}
 {% block stylesheets %}
-    <link rel="stylesheet" href="{{ asset('assets/vendor/datatables.net-bs/css/dataTables.bootstrap.min.css') }}">
-    <link rel="stylesheet" href="{{ asset('assets/vendor/datatables.net-responsive-bs/css/responsive.bootstrap.css') }}">
+    {{ parent() }}
+    <link rel="stylesheet" href="{{ asset('vendor/datatables.net-dt/css/jquery.dataTables.css') }}">
+    <link rel="stylesheet" href="{{ asset('vendor/datatables.net-responsive-dt/css/responsive.dataTables.css') }}">
     <style>
         .table > tbody > tr > td {
             vertical-align: middle;
@@ -9,10 +10,9 @@
     </style>
 {% endblock %}
 {% block javascripts %}
-    <script type="text/javascript" src="{{ asset('assets/vendor/datatables.net/js/jquery.dataTables.js') }}"></script>
-    <script type="text/javascript" src="{{ asset('assets/vendor/datatables.net-bs/js/dataTables.bootstrap.js') }}"></script>
-    <script type="text/javascript" src="{{ asset('assets/vendor/datatables.net-responsive/js/dataTables.responsive.min.js') }}"></script>
-    <script type="text/javascript" src="{{ asset('assets/vendor/datatables.net-responsive-bs/js/responsive.bootstrap.js') }}"></script>
+    {{ parent() }}
+    <script type="text/javascript" src="{{ asset('vendor/datatables/media/js/jquery.dataTables.js') }}"></script>
+    <script type="text/javascript" src="{{ asset('vendor/datatables.net-responsive/js/dataTables.responsive.js') }}"></script>
     <script>
         $(function () {
             $('#entity').dataTable({
