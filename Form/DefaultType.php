@@ -43,10 +43,10 @@ class DefaultType extends AbstractType
                     switch ($paramTypeName) {
                         case 'DateTime' :
                             $field[1] = DateTimeType::class;
-                            $field[2] = ['data' => new \DateTime(), 'date_widget' => 'single_text', 'time_widget' => 'single_text'];
+                            $field[2] = ['date_widget' => 'single_text', 'time_widget' => 'single_text'];
                             break;
 
-                        case 'boolean' :
+                        case 'bool' :
                             $field[1] = CheckboxType::class;
                             $field[2] = ['required' => false];
                             break;
