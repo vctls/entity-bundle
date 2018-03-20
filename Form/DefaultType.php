@@ -43,7 +43,7 @@ class DefaultType extends AbstractType
                     switch ($paramTypeName) {
                         case 'DateTime' :
                             $field[1] = DateTimeType::class;
-                            $field[2] = ['date_widget' => 'single_text', 'time_widget' => 'single_text'];
+                            $field[2] = ['widget' => 'single_text'];
                             break;
 
                         case 'bool' :
